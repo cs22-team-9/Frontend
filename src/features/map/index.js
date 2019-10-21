@@ -18,14 +18,14 @@ function MapTile(props) {
   return (
     <div
       className={`tile ${getTileSprite(props.tile)}`}
-      style={{ height: SPRITE_SIZE, width: SPRITE_SIZE}}
+      style={{ height: SPRITE_SIZE, width: SPRITE_SIZE }}
     />
   );
 }
 
 function MapRow(props) {
   return (
-    <div className='row'>
+    <div className='row' style={{ height: SPRITE_SIZE }}>
       {props.tiles.map(tile => (
         <MapTile tile={tile} />
       ))}

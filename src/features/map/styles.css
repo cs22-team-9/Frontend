@@ -7,8 +7,12 @@
 }
 
 .rock {
+  background-color: transparent;
   background-image: url('/tiles/rock.png');
+  background-position: center;
+  /* background: transparent; */
   background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 .tree {
