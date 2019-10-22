@@ -1,10 +1,10 @@
 .tile {
   display: inline-flex;
-  background-color: darkgreen;
+  background-color: green;
 }
 
 .grass {
-  background-color: darkgreen;
+  background-color: green;
 }
 
 .rock {
@@ -16,5 +16,10 @@
 
 .tree {
   background-image: url('/tiles/tree.png');
+  background-size: 100%;
+}
+
+.pikachu {
+  background-image: url('/tiles/pikachu.png');
   background-size: 100%;
 }
