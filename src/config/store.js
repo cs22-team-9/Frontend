@@ -1,8 +1,10 @@
 import { createStore, combineReducers } from 'redux';
 import playerReducer from '../features/player/reducer';
+import mapReducer from '../features/map/reducer';
 
 const rootReducer = combineReducers({
   player: playerReducer, // player is the key, playerReducer is whatever it returns
+  map: mapReducer,
 });
 
 const store = createStore(
