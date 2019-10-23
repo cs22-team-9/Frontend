@@ -16,11 +16,13 @@
 }
 
 .tree {
-  background-image: url('/tiles/tree.png');
+  background-image: url('/tiles/finishline(pre).png');
   background-size: 100%;
+  background-color: white;
 }
 
 .castle {
   background-image: url('/tiles/castle.png');
   background-size: 100%;
+  background-color: lightgray;
 }

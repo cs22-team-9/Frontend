@@ -10,7 +10,7 @@ function getTileSprite(type) {
       return 'grass';
     case 5:
       return 'rock';
-    case 6:
+    case 'Exit':
       return 'tree';
     case 'start_room':
       return 'castle';

@@ -44,8 +44,6 @@ class World extends React.Component {
       (this.state.matrix = _.chunk(this.state.data_title, 10));
 
     this.state.data && (this.state.newMatrix = _.chunk(this.state.data, 10));
-
-    // console.log('Matrix', this.state.matrix);
   };
 
   inOrder = () => {
@@ -57,7 +55,6 @@ class World extends React.Component {
 
       this.state.newMatrix[y][x] = oldOrder[i];
     }
-    console.log('New Matrix', this.state.newMatrix);
   };
 
   render() {
