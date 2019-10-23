@@ -6,13 +6,11 @@ import { connect } from 'react-redux';
 //     dispatch({ type: REGISTER_START });
 //     return (
 //         axios
-//             .post(`https://disneyparent-backend.herokuapp.com/auth/parents/register`, creds)
-//             .then(res => {
-//                 dispatch({ type: REGISTER_SUCCESS});
+//             .post(https://css22-9.herokuapp.com/api/registration/`, creds)
+//             .then(res => {}
 //                 return true;
 //             })
 //             .catch(err => {
-//                 dispatch ({ type: REGISTER_FAILURE, payload: err});
 //                 return err.response
 //             })
 //     )

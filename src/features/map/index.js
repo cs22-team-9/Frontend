@@ -38,7 +38,7 @@ function MapRow(props) {
 
 class Map extends React.Component {
   render() {
-    console.log('Map props', this.props.tiles);
+    // console.log('Map props', this.props.tiles);
     return (
       <div
         style={{

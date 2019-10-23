@@ -6,7 +6,6 @@ class Login extends React.Component {
   state = {
     username: '',
     password: '',
-    accountType: '',
   };
   handleChange = e => {
     this.setState({
