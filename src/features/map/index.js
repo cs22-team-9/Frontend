@@ -12,8 +12,8 @@ function getTileSprite(type) {
       return 'rock';
     case 6:
       return 'tree';
-    // case 7:
-    //   return "pikachu"
+    case 9:
+      return 'castle';
   }
 }
 
@@ -30,7 +30,7 @@ function MapRow(props) {
   return (
     <div className='row' style={{ height: SPRITE_SIZE }}>
       {props.tiles.map(tile => (
-        <MapTile tile={tile} />
+        <MapTile tile={tile} /> // 10 tiles per row
       ))}
     </div>
   );
@@ -49,7 +49,7 @@ function Map(props) {
         border: '4px solid white',
       }}>
       {props.tiles.map(row => (
-        <MapRow tiles={row} />
+        <MapRow tiles={row} /> // 10 rows
       ))}
     </div>
   );

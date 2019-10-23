@@ -17,3 +17,6 @@ const playerReducer = (state = initialState, action) => {
 };
 
 export default playerReducer;
+
+
+// [ [0: {(6 , 8)}], [1: (7,8)]]
