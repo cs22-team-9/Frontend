@@ -6,7 +6,7 @@ import './styles.css';
 
 function getTileSprite(type) {
   switch (type) {
-    case 0:
+    case 'grass1':
       return 'grass';
     case 5:
       return 'rock';
@@ -45,7 +45,6 @@ function Map(props) {
         left: '0px',
         width: '800px',
         height: '400px',
-        // backgroundColor: 'darkgreen',
         border: '4px solid white',
       }}>
       {props.tiles.map(row => (
@@ -57,7 +56,7 @@ function Map(props) {
 
 function mapStateToProps(state) {
   return {
-    tiles: state.map.tiles,
+    // tiles: state.map.tiles,
   };
 }
 

@@ -3,9 +3,10 @@
   background-color: forestgreen;
 }
 
-/* .grass {
-  background-color: green;
-} */
+.grass {
+  background-image: url('/tiles/grass.png');
+  background-size: 100%;
+}
 
 .rock {
   background-image: url('/tiles/rock.png');

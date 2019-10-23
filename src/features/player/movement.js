@@ -41,13 +41,13 @@ export default function handleMovement(player) {
     );
   }
 
-  function observePath(oldPos, newPos) {
-    const tiles = store.getState().map.tiles;
-    const y = newPos[1] / SPRITE_SIZE;
-    const x = newPos[0] / SPRITE_SIZE;
-    const nextTile = tiles[y][x];
-    return nextTile < 5;
-  }
+  // function observePath(oldPos, newPos) {
+  //   const tiles = store.getState().map.tiles;
+  //   const y = newPos[1] / SPRITE_SIZE;
+  //   const x = newPos[0] / SPRITE_SIZE;
+  //   const nextTile = tiles[y][x];
+  //   return nextTile < 5;
+  // }
 
   function dispatchPosition(direction, newPos) {
     const walkIndex = getWalkIndex();
@@ -66,7 +66,8 @@ export default function handleMovement(player) {
     const oldPos = store.getState().player.position; // 0,0
     const newPos = getNewPosition(oldPos, direction); // -40, 0
 
-    if (observeBoundaries(oldPos, newPos) && observePath(oldPos, newPos))
+    if (observeBoundaries(oldPos, newPos))
+      // && observePath(oldPos, newPos))
       dispatchPosition(direction, newPos);
   }
 
