@@ -6,13 +6,13 @@ import './styles.css';
 
 function getTileSprite(type) {
   switch (type) {
-    case 'grass1':
+    case 'new_room':
       return 'grass';
     case 5:
       return 'rock';
     case 6:
       return 'tree';
-    case 9:
+    case 'start_room':
       return 'castle';
   }
 }
@@ -30,28 +30,32 @@ function MapRow(props) {
   return (
     <div className='row' style={{ height: SPRITE_SIZE }}>
       {props.tiles.map(tile => (
-        <MapTile tile={tile} /> // 10 tiles per row
+        <MapTile tile={tile.title} /> // 10 tiles per row
       ))}
     </div>
   );
 }
 
-function Map(props) {
-  return (
-    <div
-      style={{
-        position: 'relative',
-        top: '0px',
-        left: '0px',
-        width: '800px',
-        height: '400px',
-        border: '4px solid white',
-      }}>
-      {props.tiles.map(row => (
-        <MapRow tiles={row} /> // 10 rows
-      ))}
-    </div>
-  );
+class Map extends React.Component {
+  render() {
+    console.log('Map props', this.props.tiles);
+    return (
+      <div
+        style={{
+          position: 'relative',
+          top: '0px',
+          left: '0px',
+          width: '800px',
+          height: '400px',
+          border: '4px solid white',
+        }}>
+        {this.props.tiles &&
+          this.props.tiles.map(row => (
+            <MapRow tiles={row} /> // 10 rows
+          ))}
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {

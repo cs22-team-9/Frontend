@@ -13,7 +13,10 @@ class World extends React.Component {
     data: null,
     data_title: [],
     matrix: null,
+    newOrder: [],
+    newMatrix: null,
   };
+
   // store.dispatch({
   //   type: 'ADD_TILES',
   //   payload: {
@@ -26,25 +29,40 @@ class World extends React.Component {
   }
 
   getData = () => {
-    axios
-      .get('https://adv-game-test.herokuapp.com/api/adv/call_map')
-      .then(res => {
-        this.setState({ data: res.data.call_map });
-      });
+    axios.get('https://css22-9.herokuapp.com/api/adv/rooms').then(res => {
+      this.setState({ data: res.data });
+    });
   };
 
   parseDataTitle = () => {
+    // console.log('DATA', this.state.data);
     this.state.data &&
       this.state.data.map(element => {
-        this.state.data_title.push(element.tile);
+        this.state.data_title.push(element.title);
       });
     this.state.data_title &&
       (this.state.matrix = _.chunk(this.state.data_title, 10));
-    console.log('Matrix', this.state.matrix);
+
+    this.state.data && (this.state.newMatrix = _.chunk(this.state.data, 10));
+
+    // console.log('Matrix', this.state.matrix);
+  };
+
+  inOrder = () => {
+    let oldOrder = this.state.data;
+
+    for (let i = 0; i < 100; i++) {
+      let y = oldOrder[i].x;
+      let x = oldOrder[i].y;
+
+      this.state.newMatrix[y][x] = oldOrder[i];
+    }
+    console.log('New Matrix', this.state.newMatrix);
   };
 
   render() {
     this.parseDataTitle();
+    this.state.data && this.inOrder();
     return (
       <div
         style={{
@@ -53,7 +71,7 @@ class World extends React.Component {
           height: '600px',
           margin: '20px auto',
         }}>
-        <Map tiles={this.state.matrix} />
+        <Map tiles={this.state.newMatrix} />
         <Player />
       </div>
     );
