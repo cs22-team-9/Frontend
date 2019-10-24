@@ -21,9 +21,11 @@ class Login extends React.Component {
     // this.props.loggingIn(this.state, this.state.username);
     axios
       .post(`https://css22-9.herokuapp.com/api/login/`, creds)
+      // .post(`https://lambda-mud-test.herokuapp.com/api/login/`, creds)
       .then(res => {
+        console.log("LOGIN SUCCESS", res);
         localStorage.setItem("token", res.data.key);
-        localStorage.setItem("username", username);
+        // localStorage.setItem("username", username);
         return true;
       })
       .catch(err => {
