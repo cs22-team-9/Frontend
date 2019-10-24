@@ -88,90 +88,10 @@ export default function handleMovement(player) {
   }
 
   window.addEventListener('keydown', e => {
-    handleKeyDown(e);
+    if (e.srcElement.nodeName !== 'INPUT') {
+      handleKeyDown(e);
+    }
   });
 
   return player;
 }
-
-// export class Game extends Component {
-//   state = {
-//     rooms: [],
-//     current_room: 0,
-//   };
-
-//   componentDidMount() {
-//     // axios call to get all rooms, once endpoint is implemented on backend
-//   }
-
-//   goNorth = nextRoomId => {
-//     this.setState({ current_room: nextRoomId });
-//     axios
-//       .post(
-//         'https://lambda-mud-test.herokuapp.com/api/adv/move/',
-//         { direction: 'n' },
-//         { Authorization: 'Token 6b7b9d0f33bd76e75b0a52433f268d3037e42e66' },
-//       )
-//       .then(res => console.log(res)) //set state to next room here, just dont't know how data looks rn
-//       .catch(error => console.log(error));
-//   };
-
-//   goWest = nextRoomId => {
-//     this.setState({ current_room: nextRoomId });
-//     axios
-//       .post(
-//         'https://lambda-mud-test.herokuapp.com/api/adv/move/',
-//         { direction: 'w' },
-//         { Authorization: 'Token 6b7b9d0f33bd76e75b0a52433f268d3037e42e66' },
-//       )
-//       .then(res => console.log(res))
-//       .catch(error => console.log(error));
-//   };
-
-//   goEast = nextRoomId => {
-//     this.setState({ current_room: nextRoomId });
-//     axios
-//       .post(
-//         'https://lambda-mud-test.herokuapp.com/api/adv/move/',
-//         { direction: 'e' },
-//         { Authorization: 'Token 6b7b9d0f33bd76e75b0a52433f268d3037e42e66' },
-//       )
-//       .then(res => console.log(res))
-//       .catch(error => console.log(error));
-//   };
-
-//   goSouth = nextRoomId => {
-//     this.setState({ current_room: nextRoomId });
-//     axios
-//       .post(
-//         'https://lambda-mud-test.herokuapp.com/api/adv/move/',
-//         { direction: 's' },
-//         { Authorization: 'Token 6b7b9d0f33bd76e75b0a52433f268d3037e42e66' },
-//       )
-//       .then(res => console.log(res))
-//       .catch(error => console.log(error));
-//   };
-
-//   render() {
-//     return (
-//       <div className='gamebox'>
-//         {
-//           (this.state.rooms.forEach = room => {
-//             return (
-//               <Room
-//                 room={room}
-//                 current_room={this.state.current_room}
-//                 goNorth={this.goNorth}
-//                 goWest={this.goWest}
-//                 goEast={this.goEast}
-//                 goSouth={this.goSouth}
-//               />
-//             );
-//           })
-//         }
-//       </div>
-//     );
-//   }
-// }
-
-// export default Game;
