@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import '../App.css';
 
 class Register extends React.Component {
   state = {
@@ -18,13 +19,13 @@ class Register extends React.Component {
     e.preventDefault();
     let creds = this.state;
     axios
-          .post('https://css22-9.herokuapp.com/api/registration/', creds)
-          .then(res => {
-            return true;
-          })
-          .catch(err => {
-              return err.response
-         })
+      .post('https://css22-9.herokuapp.com/api/registration/', creds)
+      .then(res => {
+        return true;
+      })
+      .catch(err => {
+        return err.response;
+      });
     this.setState({
       username: '',
       password: '',

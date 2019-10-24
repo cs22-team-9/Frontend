@@ -1,15 +1,16 @@
-import React from 'react';
-import axios from 'axios';
-import { connect } from 'react-redux';
+import React from "react";
+import axios from "axios";
+import { connect } from "react-redux";
+import "../App.css";
 
 class Login extends React.Component {
   state = {
-    username: '',
-    password: '',
+    username: "",
+    password: ""
   };
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -19,45 +20,42 @@ class Login extends React.Component {
     let username = this.state.username;
     // this.props.loggingIn(this.state, this.state.username);
     axios
-      .post(
-        `https://disneyparent-backend.herokuapp.com/auth/parents/login`,
-        creds,
-      )
+      .post(`https://css22-9.herokuapp.com/api/login/`, creds)
       .then(res => {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('username', username);
+        localStorage.setItem("token", res.data.key);
+        localStorage.setItem("username", username);
         return true;
       })
       .catch(err => {
         return err.response;
       });
     this.setState({
-      username: '',
-      password: '',
-      email: '',
+      username: "",
+      password: "",
+      email: ""
     });
-    this.props.history.push('/');
+    this.props.history.push("/");
   };
   render() {
     return (
-      <div className='input-form'>
+      <div className="input-form">
         <input
-          placeholder='Username'
+          placeholder="Username"
           onChange={this.handleChange}
           value={this.state.username}
-          name='username'
+          name="username"
         />
         <input
-          placeholder='Password'
+          placeholder="Password"
           onChange={this.handleChange}
           value={this.state.password}
-          name='password'
+          name="password"
         />
         <input
-          placeholder='Email'
+          placeholder="Email"
           onChange={this.handleChange}
           value={this.state.email}
-          name='email'
+          name="email"
         />
         <button onClick={this.loggingIn}>Login</button>
       </div>

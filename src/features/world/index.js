@@ -1,49 +1,108 @@
-import React from 'react';
-import Player from '../player';
-import Map from '../map';
+import React from "react";
+import Player from "../player";
+import Map from "../map";
+import axios from "axios";
+import { axiosWithAuth } from "../../auth/axiosWithAuth.js";
 
-// import { tiles } from '../../data/maps/1';
-// import store from '../../config/store';
-import axios from 'axios';
-
-var _ = require('lodash');
+var _ = require("lodash");
 
 class World extends React.Component {
   state = {
+    id: "",
+    name: "",
+    title: "",
+    description: "",
+    players: [],
     data: null,
     data_title: [],
     matrix: null,
     newOrder: [],
-    newMatrix: null,
+    newMatrix: null
   };
 
-  // store.dispatch({
-  //   type: 'ADD_TILES',
-  //   payload: {
-  //     tiles: tiles,
-  //   },
-  // });
-
   componentDidMount() {
+    axiosWithAuth()
+      .get("https://css22-9.herokuapp.com/api/adv/init")
+      .then(res => {
+        console.log("INIT RES", res);
+        this.setState({
+          id: res.data.id,
+          name: res.data.name,
+          title: res.data.title,
+          description: res.data.description,
+          players: res.data.players
+        });
+      })
+      .catch(err => {
+        console.log(`Init ERR ${err}`);
+      });
     this.getData();
   }
 
   getData = () => {
-    axios.get('https://css22-9.herokuapp.com/api/adv/rooms').then(res => {
+    axios.get("https://css22-9.herokuapp.com/api/adv/rooms").then(res => {
       this.setState({ data: res.data });
     });
   };
+  goDirection = direction => {
+    axiosWithAuth()
+      .post("https://cs22-9.herokuapp.com/api/adv/move/", direction)
+      .then(res => {
+        console.log(res);
+        this.setState({
+          id: res.data.id,
+          name: res.data.name,
+          title: res.data.title,
+          description: res.data.description,
+          players: res.data.players
+        });
+      })
+      .catch(err => {
+        console.log(`Login Error: ${err}`);
+      });
+  };
+
+  goNorth = e => {
+    e.preventDefault();
+    const north = {
+      direction: "n"
+    };
+    this.goDirection(north);
+  };
+
+  goSouth = e => {
+    e.preventDefault();
+    const south = {
+      direction: "s"
+    };
+    this.goDirection(south);
+  };
+
+  goWest = e => {
+    e.preventDefault();
+    const west = {
+      direction: "w"
+    };
+    this.goDirection(west);
+  };
+
+  goEast = e => {
+    e.preventDefault();
+    const east = {
+      direction: "e"
+    };
+    this.goDirection(east);
+  };
 
   parseDataTitle = () => {
-    // console.log('DATA', this.state.data);
     this.state.data &&
       this.state.data.map(element => {
         this.state.data_title.push(element.title);
       });
     this.state.data_title &&
-      (this.state.matrix = _.chunk(this.state.data_title, 10));
+      (this.state.matrix = _.chunk(this.state.data_title, 25));
 
-    this.state.data && (this.state.newMatrix = _.chunk(this.state.data, 10));
+    this.state.data && (this.state.newMatrix = _.chunk(this.state.data, 25));
   };
 
   inOrder = () => {
@@ -60,14 +119,16 @@ class World extends React.Component {
   render() {
     this.parseDataTitle();
     this.state.data && this.inOrder();
+    console.log(this.state.newMatrix);
     return (
       <div
         style={{
-          position: 'relative',
-          width: '400px',
-          height: '600px',
-          margin: '20px auto',
-        }}>
+          position: "relative",
+          width: "1000px",
+          height: "400px",
+          margin: "20px auto"
+        }}
+      >
         <Map tiles={this.state.newMatrix} />
         <Player />
       </div>
