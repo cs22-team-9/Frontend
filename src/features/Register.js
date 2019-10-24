@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import '../App.css';
 
 class Register extends React.Component {
   state = {
