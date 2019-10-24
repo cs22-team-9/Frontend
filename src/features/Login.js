@@ -34,7 +34,7 @@ class Login extends React.Component {
     this.setState({
       username: '',
       password: '',
-      accountType: '',
+      email: '',
     });
     this.props.history.push('/');
   };
@@ -59,13 +59,6 @@ class Login extends React.Component {
           value={this.state.email}
           name='email'
         />
-        <input
-          placeholder='Account type'
-          onChange={this.handleChange}
-          value={this.state.accountType}
-          name='accountType'
-        />
-
         <button onClick={this.loggingIn}>Login</button>
       </div>
     );
