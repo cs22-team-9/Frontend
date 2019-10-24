@@ -14,14 +14,31 @@ function getTileSprite(type) {
       return 'tree';
     case 'start_room':
       return 'castle';
+    default:
+      console.log('');
   }
 }
 
 function MapTile(props) {
+  // let borderRight =
+  //   this.state.room.e_to === 0 ? '5px solid lightgrey' : '5px solid red';
+  // let borderLeft =
+  //   this.state.room.w_to === 0 ? '5px solid lightgrey' : '5px solid red';
+  // let borderTop =
+  //   this.state.room.n_to === 0 ? '5px solid lightgrey' : '5px solid red';
+  // let borderBottom =
+  //   this.state.room.s_to === 0 ? '5px solid lightgrey' : '5px solid red';
   return (
     <div
       className={`tile ${getTileSprite(props.tile)}`}
-      style={{ height: SPRITE_SIZE, width: SPRITE_SIZE }}
+      style={{
+        height: SPRITE_SIZE,
+        width: SPRITE_SIZE,
+        // borderRight: borderRight,
+        // borderLeft: borderLeft,
+        // borderTop: borderTop,
+        // borderBottom: borderBottom,
+      }}
     />
   );
 }
@@ -45,7 +62,7 @@ class Map extends React.Component {
           position: 'relative',
           top: '0px',
           left: '0px',
-          width: '800px',
+          width: '1000px',
           height: '400px',
           border: '4px solid white',
         }}>
