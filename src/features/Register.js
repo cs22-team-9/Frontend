@@ -2,20 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-// export const register = creds => dispatch => {
-//     dispatch({ type: REGISTER_START });
-//     return (
-//         axios
-//             .post(https://css22-9.herokuapp.com/api/registration/`, creds)
-//             .then(res => {}
-//                 return true;
-//             })
-//             .catch(err => {
-//                 return err.response
-//             })
-//     )
-// }
-
 class Register extends React.Component {
   state = {
     username: '',
@@ -30,7 +16,15 @@ class Register extends React.Component {
 
   register = e => {
     e.preventDefault();
-    this.props.register(this.state);
+    let creds = this.state;
+    axios
+          .post('https://css22-9.herokuapp.com/api/registration/', creds)
+          .then(res => {
+            return true;
+          })
+          .catch(err => {
+              return err.response
+         })
     this.setState({
       username: '',
       password: '',
@@ -48,9 +42,14 @@ class Register extends React.Component {
           value={this.state.username}
           name='username'
         />
-
         <input
           placeholder='Password'
+          onChange={this.handleChange}
+          value={this.state.password}
+          name='password'
+        />
+        <input
+          placeholder='Confirm-Password'
           onChange={this.handleChange}
           value={this.state.password}
           name='password'
