@@ -69,39 +69,6 @@ class World extends React.Component {
       });
   };
 
-  goNorth = e => {
-    e.preventDefault();
-    const north = {
-      direction: "n"
-    };
-    this.goDirection(north);
-  };
-
-  goSouth = e => {
-    e.preventDefault();
-    const south = {
-      direction: "s"
-    };
-    this.goDirection(south);
-  };
-
-  goWest = e => {
-    e.preventDefault();
-    const west = {
-      direction: "w"
-    };
-    this.goDirection(west);
-  };
-
-  goEast = e => {
-    e.preventDefault();
-    const east = {
-      direction: "e"
-    };
-    console.log(east);
-    this.goDirection(east);
-  };
-
   parseDataTitle = () => {
     this.state.data &&
       this.state.data.map(element => {
@@ -116,7 +83,7 @@ class World extends React.Component {
   inOrder = () => {
     let oldOrder = this.state.data;
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 250; i++) {
       let y = oldOrder[i].x;
       let x = oldOrder[i].y;
 
@@ -149,13 +116,9 @@ class World extends React.Component {
           current_room={this.state.current_room}
         />
         <Player />
-        <div>
-          <div onClick={e => this.goNorth(e)}>NORTH</div>
-          <div onClick={e => this.goEast(e)}>EAST</div>
-          <div onClick={e => this.goSouth(e)}>SOUTH</div>
-          <div onClick={e => this.goWest(e)}>WEST</div>
-        </div>
+
         <div onClick={this.logOut}>LOGOUT</div>
+        <div>No map? Refresh the browser!</div>
       </div>
     );
   }
