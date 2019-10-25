@@ -6,7 +6,7 @@ import "../App.css";
 class Register extends React.Component {
   state = {
     username: "",
-    password: "",
+    password1: "",
     password2: "",
     email: ""
   };
@@ -22,14 +22,16 @@ class Register extends React.Component {
     axios
       .post("https://css22-9.herokuapp.com/api/registration/", creds)
       .then(res => {
+        console.log("REGISTER SUCCESS");
         return true;
       })
       .catch(err => {
+        console.log(err);
         return err.response;
       });
     this.setState({
       username: "",
-      password: "",
+      password1: "",
       password2: "",
       email: ""
     });
@@ -48,8 +50,8 @@ class Register extends React.Component {
         <input
           placeholder="Password"
           onChange={this.handleChange}
-          value={this.state.password}
-          name="password"
+          value={this.state.password1}
+          name="password1"
         />
         <input
           placeholder="Confirm-Password"

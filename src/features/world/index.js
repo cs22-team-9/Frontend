@@ -13,6 +13,7 @@ class World extends React.Component {
     title: "",
     description: "",
     players: [],
+    current_room: null,
     data: null,
     data_title: [],
     matrix: null,
@@ -31,7 +32,8 @@ class World extends React.Component {
           name: res.data.name,
           title: res.data.title,
           description: res.data.description,
-          players: res.data.players
+          players: res.data.players,
+          current_room: res.data.current_room
         });
       })
       .catch(err => {
@@ -142,13 +144,16 @@ class World extends React.Component {
           margin: "20px auto"
         }}
       >
-        <Map tiles={this.state.newMatrix} />
+        <Map
+          tiles={this.state.newMatrix}
+          current_room={this.state.current_room}
+        />
         <Player />
         <div>
-          <div onClick={this.goNorth}>NORTH</div>
+          <div onClick={e => this.goNorth(e)}>NORTH</div>
           <div onClick={e => this.goEast(e)}>EAST</div>
-          <div>SOUTH</div>
-          <div>WEST</div>
+          <div onClick={e => this.goSouth(e)}>SOUTH</div>
+          <div onClick={e => this.goWest(e)}>WEST</div>
         </div>
         <div onClick={this.logOut}>LOGOUT</div>
       </div>
