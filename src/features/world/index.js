@@ -2,7 +2,7 @@ import React from "react";
 import Player from "../player";
 import Map from "../map";
 import axios from "axios";
-import { axiosWithAuth } from "../../auth/axiosWithAuth.js";
+import axiosWithAuth from "../../auth/axiosWithAuth.js";
 
 var _ = require("lodash");
 
@@ -13,6 +13,7 @@ class World extends React.Component {
     title: "",
     description: "",
     players: [],
+    current_room: null,
     data: null,
     data_title: [],
     matrix: null,
@@ -22,35 +23,41 @@ class World extends React.Component {
 
   componentDidMount() {
     axiosWithAuth()
-      .get("https://css22-9.herokuapp.com/api/adv/init")
+      .get("https://css22-9.herokuapp.com/api/adv/init/")
+      // .get("https://lambda-mud-test.herokuapp.com/api/adv/init")
       .then(res => {
         console.log("INIT RES", res);
         this.setState({
-          id: res.data.id,
+          id: res.data.uuid,
           name: res.data.name,
           title: res.data.title,
           description: res.data.description,
-          players: res.data.players
+          players: res.data.players,
+          current_room: res.data.current_room
         });
       })
       .catch(err => {
         console.log(`Init ERR ${err}`);
       });
-    this.getData();
+    return this.getData();
   }
 
   getData = () => {
-    axios.get("https://css22-9.herokuapp.com/api/adv/rooms").then(res => {
-      this.setState({ data: res.data });
-    });
+    axiosWithAuth()
+      .get("https://css22-9.herokuapp.com/api/adv/rooms/")
+      // .get("https://lambda-mud-test.herokuapp.com/api/adv/rooms")
+      .then(res => {
+        this.setState({ data: res.data });
+      });
   };
   goDirection = direction => {
     axiosWithAuth()
-      .post("https://cs22-9.herokuapp.com/api/adv/move/", direction)
+      .post("https://css22-9.herokuapp.com/api/adv/move/", direction)
+      // .post("https://lambda-mud-test.herokuapp.com/api/adv/move", direction)
       .then(res => {
         console.log(res);
         this.setState({
-          id: res.data.id,
+          id: res.data.uuid,
           name: res.data.name,
           title: res.data.title,
           description: res.data.description,
@@ -58,7 +65,7 @@ class World extends React.Component {
         });
       })
       .catch(err => {
-        console.log(`Login Error: ${err}`);
+        console.log(err);
       });
   };
 
@@ -91,6 +98,7 @@ class World extends React.Component {
     const east = {
       direction: "e"
     };
+    console.log(east);
     this.goDirection(east);
   };
 
@@ -116,6 +124,13 @@ class World extends React.Component {
     }
   };
 
+  logOut = () => {
+    localStorage.removeItem("token");
+    console.log("LOGGEDOUT");
+    // window.location.reload(false);
+    // props.history.push("/login");
+  };
+
   render() {
     this.parseDataTitle();
     this.state.data && this.inOrder();
@@ -129,8 +144,18 @@ class World extends React.Component {
           margin: "20px auto"
         }}
       >
-        <Map tiles={this.state.newMatrix} />
+        <Map
+          tiles={this.state.newMatrix}
+          current_room={this.state.current_room}
+        />
         <Player />
+        <div>
+          <div onClick={e => this.goNorth(e)}>NORTH</div>
+          <div onClick={e => this.goEast(e)}>EAST</div>
+          <div onClick={e => this.goSouth(e)}>SOUTH</div>
+          <div onClick={e => this.goWest(e)}>WEST</div>
+        </div>
+        <div onClick={this.logOut}>LOGOUT</div>
       </div>
     );
   }

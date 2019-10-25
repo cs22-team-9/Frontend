@@ -1,29 +1,78 @@
-import store from '../../config/store.js';
-import { SPRITE_SIZE, MAP_HEIGHT, MAP_WIDTH } from '../../config/constants.js';
+import store from "../../config/store.js";
+import { SPRITE_SIZE, MAP_HEIGHT, MAP_WIDTH } from "../../config/constants.js";
+import axiosWithAuth from "../../auth/axiosWithAuth.js";
+
+// let can_move = null;
+// function move(direction) {
+//   axiosWithAuth()
+//     .post("https://css22-9.herokuapp.com/api/adv/move/", direction)
+//     // .post("https://lambda-mud-test.herokuapp.com/api/adv/move", direction)
+//     .then(res => {
+//       console.log(res);
+
+//       // if (res.data.error_msg === "You cannot move that way.") {
+//       //   console.log(res.data.error_msg, "INSIDE IF");
+//       //   return false;
+//       // } else {
+//       //   console.log(res.data.error_msg, "INSIDE ELSE");
+//       //   return true;
+//       // }
+//       return res.data.error_msg;
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// }
 
 export default function handleMovement(player) {
   function getNewPosition(oldPos, direction) {
     switch (direction) {
-      case 'WEST':
+      case "WEST":
         return [oldPos[0] - SPRITE_SIZE, oldPos[1]]; // [-40, 0]
-      case 'EAST':
+      case "EAST":
         return [oldPos[0] + SPRITE_SIZE, oldPos[1]];
-      case 'NORTH':
+      case "NORTH":
         return [oldPos[0], oldPos[1] - SPRITE_SIZE];
-      case 'SOUTH':
+      case "SOUTH":
         return [oldPos[0], oldPos[1] + SPRITE_SIZE];
     }
   }
 
+  // export default function handleMovement(player) {
+  // function getNewPosition(oldPos, direction) {
+  //   switch (direction) {
+  //     case 'WEST':
+  //       return [oldPos[0] - SPRITE_SIZE, oldPos[1]]; // [-40, 0]
+  //     case 'EAST':
+  //       return [oldPos[0] + SPRITE_SIZE, oldPos[1]];
+  //     case 'NORTH':
+  //       return [oldPos[0], oldPos[1] - SPRITE_SIZE];
+  //     case 'SOUTH':
+  //       return [oldPos[0], oldPos[1] + SPRITE_SIZE];
+  //   }
+  // }
+
+  // function getSpriteLocation(direction, walkIndex) {
+  //   switch (direction) {
+  //     case "s":
+  //       return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 0}px`;
+  //     case "e":
+  //       return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 1}px`;
+  //     case "w":
+  //       return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 2}px`;
+  //     case "n":
+  //       return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 3}px`;
+  //   }
+  // }
   function getSpriteLocation(direction, walkIndex) {
     switch (direction) {
-      case 'SOUTH':
+      case "SOUTH":
         return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 0}px`;
-      case 'EAST':
+      case "EAST":
         return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 1}px`;
-      case 'WEST':
+      case "WEST":
         return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 2}px`;
-      case 'NORTH':
+      case "NORTH":
         return `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 3}px`;
     }
   }
@@ -52,43 +101,104 @@ export default function handleMovement(player) {
   function dispatchPosition(direction, newPos) {
     const walkIndex = getWalkIndex();
     store.dispatch({
-      type: 'MOVE_PLAYER',
+      type: "MOVE_PLAYER",
       payload: {
         position: newPos,
         direction,
         walkIndex,
-        spriteLocation: getSpriteLocation(direction, walkIndex), // direction: direction
-      },
+        spriteLocation: getSpriteLocation(direction, walkIndex) // direction: direction
+      }
     });
   }
 
   function attemptMove(direction) {
-    const oldPos = store.getState().player.position; // 0,0
-    const newPos = getNewPosition(oldPos, direction); // -40, 0
+    // console.log(move({ direction: dir }));
+    // console.log(can_move);
+    let dir = null;
+    // let can_move = null;
+    if (direction === "SOUTH") {
+      dir = { direction: "s" };
+    } else if (direction === "NORTH") {
+      dir = { direction: "n" };
+    } else if (direction === "WEST") {
+      dir = { direction: "w" };
+    } else {
+      dir = { direction: "e" };
+    }
+    axiosWithAuth()
+      .post("https://css22-9.herokuapp.com/api/adv/move/", dir)
+      .then(res => {
+        console.log(res.data.error_msg, "res inside of attempt");
+        if (res.data.error_msg == "") {
+          const oldPos = store.getState().player.position; // 0,0
+          const newPos = getNewPosition(oldPos, direction); // -40, 0
 
-    if (observeBoundaries(oldPos, newPos))
-      // && observePath(oldPos, newPos))
-      dispatchPosition(direction, newPos);
+          if (observeBoundaries(oldPos, newPos))
+            // && observePath(oldPos, newPos))
+            dispatchPosition(direction, newPos);
+        } else {
+          console.log("ELSE!!!");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   function handleKeyDown(e) {
     e.preventDefault();
     switch (e.keyCode) {
       case 37:
-        return attemptMove('WEST');
+        // if (move({ direction: "w" }) === "") {
+        return attemptMove("WEST");
+      // } else {
+      //   console.log("error msg filled");
+      // }
+      // break;
+      // if (move({ direction: "w" })) {
+      // return attemptMove("WEST");
+      // }
+      // return attemptMove("w");
       case 38:
-        return attemptMove('NORTH');
+        // if (move({ direction: "n" }) === "") {
+        return attemptMove("NORTH");
+      // } else {
+      //   console.log("error msg filled");
+      // }
+      // break;
+
+      // return attemptMove("n");
+
       case 39:
-        return attemptMove('EAST');
+        // if (move({ direction: "e" })) {
+        return attemptMove("EAST");
+      // } else {
+      //   console.log("error msg filled");
+      // }
+      // break;
+
+      // return attemptMove("e");
+
       case 40:
-        return attemptMove('SOUTH');
+        // if (move({ direction: "s" }) === "") {
+        //   attemptMove("SOUTH");
+        // } else {
+        //   console.log("error msg filled");
+        // }
+        // break;
+
+        // if (move({ direction: "s" })) {
+        return attemptMove("SOUTH");
+      // }
+      // return attemptMove("s");
+
       default:
         console.log(e.keyCode);
     }
   }
 
-  window.addEventListener('keydown', e => {
-    if (e.srcElement.nodeName !== 'INPUT') {
+  window.addEventListener("keydown", e => {
+    if (e.srcElement.nodeName !== "INPUT") {
       handleKeyDown(e);
     }
   });

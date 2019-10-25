@@ -26,3 +26,6 @@
   background-size: 100%;
   background-color: lightgray;
 }
+.current{
+  background-color: blue
+}
